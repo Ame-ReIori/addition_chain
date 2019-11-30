@@ -1,7 +1,7 @@
 #coding=gbk
 import math
 
-MAX=100000
+MAX=10000
 l=0
 ll=0
 lll=999999
@@ -32,7 +32,6 @@ def dfs(cur,n) :
             dfs(cur + 1,n)
             if (ok):
                 return
-
 def search(n) :
     global  deep,annum,ani,anj,ok
     N=10000
@@ -69,7 +68,7 @@ def ac(n):
             oneMax = len(one)
     if(oneMax > (len(ns)//2)):
         oneMax = len(ns)//2
-    addnumMax = 2 ** oneMax - 1
+    addnumMax = 2 ** oneMax
     
     for addnum in range(1,addnumMax,2):
         addnumStr = bin(addnum)[2:]
@@ -184,14 +183,15 @@ def branch(n,addnum):
     return
     
 def acprint(length,chain):
-    print("length = ",length)
+    print("链长为",length)
     for i in range(0,len(chain)):
         print(chain[i]," ",end="")
     print("")
     return
 
 if __name__ == "__main__":
-    print(search(2**10-1))
     n=int(input())
     length,chain=ac(n)
     acprint(length, chain)
+    
+    
