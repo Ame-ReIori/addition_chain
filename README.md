@@ -12,7 +12,7 @@ It is just a project of addition chain. We present a new method to get a better 
 * pandas
 > pip install pandas
 
-I'm not sure whether pandas is eccential. You can run it without pandas. If it doesn't work, pip it.
+I'm not sure whether pandas is essential. You can run it without pandas. If it doesn't work, pip it.
 
 
 ## api
