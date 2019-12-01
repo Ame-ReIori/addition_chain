@@ -70,6 +70,9 @@ def ac(n):
         oneMax = len(ns)//2
     addnumMax = 2 ** oneMax
     
+    if(addnumMax > addnumBound):
+        addnumMax = addnumBound
+    
     for addnum in range(1,addnumMax,2):
         addnumStr = bin(addnum)[2:]
         if(ns.count(addnumStr)>=1):
@@ -106,12 +109,14 @@ def pre(n,addnum):
         l+=1
     t=a[l+1]
     
+    '''
     if(addnum>addnumBound):
         length,chain = ac(addnum)
         l=length
         a[0:l]=chain
         tl=l
         return
+    '''
     
     arr=a[0:l+1]
     arr1=search(addnum)
