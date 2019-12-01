@@ -1,7 +1,7 @@
-def getAddnumList(n):
+
+def getAddnumList(n,addnumBound):
     
     addnumList = []
-    addnumBound = 2 ** 10
     ns = bin(n)[2:]
     ones = ns.split('0')
     oneMax = 0
@@ -20,5 +20,15 @@ def getAddnumList(n):
         
     return addnumList
 
+def getAddnumOddList(addnumBound):
+    addnumList = []
+    for addnum in range(1,addnumBound,2):
+        addnumList.append(addnum)
+    return addnumList
+
 if __name__ == "__main__":
-    print(getAddnumList(2**100 - 1))
+    print(getAddnumList(2**9 - 1,2**10))
+    print(getAddnumList(2**100 - 1,2**10))
+    
+    
+    print(getAddnumOddList(2**10))
