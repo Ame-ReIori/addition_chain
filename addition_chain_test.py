@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import time
 
+
 def count_one(n):
     sum = 0
     while(n):
@@ -14,12 +15,14 @@ def count_one(n):
         n &= (n-1)
     return sum
 
+
 def accuracy_test():
     n = 1023
     addnum = 1
     length, chain = acWithAddnum(n, addnum)
     print(length)
     print(chain)
+
 
 def param_amount_test(n):
     # generate different bit addnum
@@ -33,19 +36,22 @@ def param_amount_test(n):
         addnum_list.append(addnum)
         length, _ = acWithAddnum(n, addnum)
         length_list.append(length)
-        i += 1 
-        process_bar.show_process() 
+        i += 1
+        process_bar.show_process()
     fig, ax = plt.subplots()
     sns.set()
     ax.scatter(addnum_list, length_list)
+    plt.title(str(n))
+    plt.savefig('img/test_param_amount/addition_chain_' + str(bin(n)) + '.png')
     # ax.legend()
-    plt.show()
+    # plt.show()
     # return addnum_list, length_list
+
 
 def param_amount_diffbit_test(n):
     # generate different bit addnum
     bit_max = len(bin(n)[2:]) // 2
-    data = {str(i):[[],[]] for i in range(1, bit_max + 1)}
+    data = {str(i): [[], []] for i in range(1, bit_max + 1)}
     for addnum in range(1, 2**bit_max):
         index = str(count_one(addnum))
         data[index][0].append(addnum)
@@ -63,7 +69,7 @@ def param_amount_diffbit_test(n):
 def ratio_param(ratio, k):
     # generate some data with the radio
     # bit-range(every range with 10 num)
-    # 1-64        
+    # 1-64
     # 64-128
     # 128-512
     # 512-1024
@@ -81,7 +87,7 @@ def ratio_param(ratio, k):
                 num |= (1 << bit)
             tempnum.append(num)
         data_list.append(tempnum)
-    
+
     result_list = []
     max_steps = len(data_list) * len(data_list[0])
     i = 0
@@ -98,7 +104,8 @@ def ratio_param(ratio, k):
             i += 1
         result_list.append(result_data_list)
 
-    return result_list                
+    return result_list
+
 
 if __name__ == "__main__":
     '''
@@ -111,4 +118,8 @@ if __name__ == "__main__":
     print(str(100/(end-start)) + 'cps')
     print(length)
     '''
-    param_amount_test(812942)
+    start = time.time()
+    for i in range(6, 25):
+        param_amount_test(random.randint(2**(i-1), 2**i))
+    end = time.time()
+    print(str(end - start) + 's')
