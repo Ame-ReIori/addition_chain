@@ -41,8 +41,10 @@ def param_amount_test(n):
     fig, ax = plt.subplots()
     sns.set()
     ax.scatter(addnum_list, length_list)
+    plt.title(str(n))
+    plt.savefig('img/test_param_amount/addition_chain_' + str(bin(n)) + '.png')
     # ax.legend()
-    plt.show()
+    # plt.show()
     # return addnum_list, length_list
 
 
@@ -117,6 +119,7 @@ if __name__ == "__main__":
     print(length)
     '''
     start = time.time()
-    param_amount_test(2**20-1)
+    for i in range(6, 25):
+        param_amount_test(random.randint(2**(i-1), 2**i))
     end = time.time()
     print(str(end - start) + 's')
