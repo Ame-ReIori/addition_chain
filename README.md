@@ -16,3 +16,6 @@ I'm not sure whether pandas is essential. You can run it without pandas. If it d
 
 
 ## api
+
+## current progress
+完成了对参数选取区间的限制，认为参数选取为[0, 1023]的奇数
