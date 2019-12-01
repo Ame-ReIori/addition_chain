@@ -30,5 +30,4 @@ if __name__ == "__main__":
     print(getAddnumList(2**9 - 1,2**10))
     print(getAddnumList(2**100 - 1,2**10))
     
-    
     print(getAddnumOddList(2**10))
