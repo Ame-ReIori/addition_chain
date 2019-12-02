@@ -1,6 +1,7 @@
 from AC_first import ac, acWithAddnum
 import random
 from ShowProcess import ShowProcess
+from addnumList import getAddnumOddList, getAddnumList
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
@@ -50,19 +51,26 @@ def param_amount_test(n):
 
 def param_amount_diffbit_test(n):
     # generate different bit addnum
-    bit_max = len(bin(n)[2:]) // 2
-    data = {str(i): [[], []] for i in range(1, bit_max + 1)}
-    for addnum in range(1, 2**bit_max):
+    i = 0
+    data = {str(i): [[], []] for i in range(1, 11)}
+    addnum_list = getAddnumOddList(1024)
+    process_bar = ShowProcess(len(addnum_list), 'down')
+    for addnum in addnum_list:
         index = str(count_one(addnum))
         data[index][0].append(addnum)
         length, _ = acWithAddnum(n, addnum)
         data[index][1].append(length)
-    fig, ax = plt.subplots()
+        i += 1
+        process_bar.show_process()
+    # plt.figure(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(13, 6))
     sns.set()
     for key in data:
         ax.scatter(data[key][0], data[key][1], label=key)
-    ax.legend()
-    plt.show()
+    ax.legend(bbox_to_anchor=(1.05, 0), loc=3, borderaxespad=0)
+    plt.title(str(len(bin(n)[2:])))
+    plt.savefig('img/test_param_amount_diffbit/addition_chain_' + str(len(bin(n)[2:])) + '.png')
+    
     return data
 
 
@@ -118,8 +126,12 @@ if __name__ == "__main__":
     print(str(100/(end-start)) + 'cps')
     print(length)
     '''
+    '''
     start = time.time()
     for i in range(6, 25):
         param_amount_test(random.randint(2**(i-1), 2**i))
     end = time.time()
     print(str(end - start) + 's')
+    '''
+    for i in range(16, 4096-128, 128):
+        param_amount_diffbit_test(random.randint(2**i, 2**(i+128)))
