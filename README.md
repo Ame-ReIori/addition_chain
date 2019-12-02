@@ -14,6 +14,9 @@ It is just a project of addition chain. We present a new method to get a better 
 
 I'm not sure whether pandas is essential. You can run it without pandas. If it doesn't work, pip it.
 
+## 预计实验
+* 对同一个数，参数的大小对加法链长度的影响 ----finished
+* 对同一个数，参数比特数对加法链长度的影响
 
 ## api
 
