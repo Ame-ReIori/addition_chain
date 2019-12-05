@@ -74,7 +74,7 @@ def param_amount_diffbit_test(n):
     return data
 
 
-def ratio_param(ratio, k):
+def ratio_param(ratio):
     # generate some data with the radio
     # bit-range(every range with 10 num)
     # 1-64
@@ -86,33 +86,35 @@ def ratio_param(ratio, k):
     bit_range = [64, 128, 512, 1024, 2048, 4096]
     data_list = []
     for ran in bit_range:
-        tempnum = []
-        for _ in range(k):
-            num = 0
-            r = int(ratio * ran)
-            nonce = [random.randint(0, ran - 1) for _ in range(r)]
-            for bit in nonce:
-                num |= (1 << bit)
-            tempnum.append(num)
-        data_list.append(tempnum)
+        num = 0
+        r = int(ratio * ran)
+        nonce = [random.randint(0, ran - 1) for _ in range(r)]
+        for bit in nonce:
+            num |= (1 << bit)
+        data_list.append(num)
 
-    result_list = []
-    max_steps = len(data_list) * len(data_list[0])
+    addnum_list = getAddnumOddList(1024)
+    max_steps = len(data_list) * len(addnum_list)
     i = 0
     process_bar = ShowProcess(max_steps, 'down')
     for data in data_list:
-        result_data_list = []
-        for item in data:
-            # for each data
-            result_item_list = []
-            for addnum in range(1, 10):
-                length, _ = acWithAddnum(item, addnum)
-                result_item_list.append({addnum: length})
-            result_data_list.append(result_item_list)
+        data_dict = {str(i): [[], []] for i in range(1, 11)}
+        for addnum in addnum_list:
+            index = str(count_one(addnum))
+            data_dict[index][0].append(addnum)
+            length, _ = acWithAddnum(data, addnum)
+            data_dict[index][1].append(length)
             i += 1
-        result_list.append(result_data_list)
+            process_bar.show_process()
+        fig, ax = plt.subplots(figsize=(13, 6))
+        sns.set()
+        for key in data_dict:
+            ax.scatter(data_dict[key][0], data_dict[key][1], label=key)
+        ax.legend(bbox_to_anchor=(1.05, 0), loc=3, borderaxespad=0)
+        plt.title(str(len(bin(data)[2:])))
+        plt.savefig('img/ratio--' + str(ratio) + '/addition_chain_' + str(len(bin(data)[2:])) + '.png')
 
-    return result_list
+    return data
 
 
 if __name__ == "__main__":
@@ -133,5 +135,13 @@ if __name__ == "__main__":
     end = time.time()
     print(str(end - start) + 's')
     '''
-    for i in range(16, 4096-128, 128):
-        param_amount_diffbit_test(random.randint(2**i, 2**(i+128)))
+    ratio_param(0.1)
+    ratio_param(0.2)
+    ratio_param(0.3)
+    ratio_param(0.4)
+    ratio_param(0.5)
+    ratio_param(0.6)
+    ratio_param(0.7)
+    ratio_param(0.8)
+    ratio_param(0.9)
+    ratio_param(1.0)
